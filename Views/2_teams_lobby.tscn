@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://djjivgknw8vqw"]
+[gd_scene load_steps=5 format=3 uid="uid://djjivgknw8vqw"]
 
 [ext_resource type="Script" uid="uid://iuxqi2aqpy0u" path="res://Views/2_teams_lobby.gd" id="1_k0phf"]
 [ext_resource type="PackedScene" uid="uid://djit8qia8kgwy" path="res://Views/player_card.tscn" id="2_0qucc"]
@@ -6,15 +6,18 @@
 [sub_resource type="LabelSettings" id="LabelSettings_ld1rt"]
 font_size = 40
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdx03"]
+bg_color = Color(0, 0, 0, 0)
+
 [node name="2TeamsLobby" type="CanvasLayer" node_paths=PackedStringArray("left_team_player_list", "left_team_join_button", "right_team_player_list", "right_team_join_button", "queue_player_list", "queue_join_button")]
 script = ExtResource("1_k0phf")
 PlayerCardScene = ExtResource("2_0qucc")
 left_team_player_list = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList")
-left_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList/JoinButton")
+left_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/PanelContainer/JoinButton")
 right_team_player_list = NodePath("PanelContainer/HSplitContainer/HSplitContainer/RightContainer/RightContainerList/PlayerList")
-right_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/RightContainer/RightContainerList/PlayerList/JoinButton")
+right_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/RightContainer/PanelContainer/JoinButton")
 queue_player_list = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList")
-queue_join_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList/JoinButton")
+queue_join_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/JoinButton")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -72,7 +75,12 @@ label_settings = SubResource("LabelSettings_ld1rt")
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_fdx03")
+
+[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
@@ -100,7 +108,12 @@ label_settings = SubResource("LabelSettings_ld1rt")
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/HSplitContainer/RightContainer/RightContainerList/PlayerList"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/HSplitContainer/RightContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_fdx03")
+
+[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/HSplitContainer/RightContainer/PanelContainer"]
 y_sort_enabled = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -135,17 +148,21 @@ text = "Queue"
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_fdx03")
+
+[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
-text = "Join
-"
+text = "Unready"
 
 [node name="Chat?" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer"]
 visible = false
 layout_mode = 2
 
-[connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList/JoinButton" to="." method="_on_join_left_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/RightContainer/RightContainerList/PlayerList/JoinButton" to="." method="_on_join_right_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList/JoinButton" to="." method="_on_join_queue_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/PanelContainer/JoinButton" to="." method="_on_join_left_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/RightContainer/PanelContainer/JoinButton" to="." method="_on_join_right_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/JoinButton" to="." method="_on_join_queue_button_pressed"]

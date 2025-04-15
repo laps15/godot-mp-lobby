@@ -76,10 +76,8 @@ func set_player_info(id: int, new_player_info: Variant):
 		if id == player_id:
 			continue
 		self._update_player_info.rpc_id(player_id, new_player_info)
-		print("sending update to #", player_id, " new ", new_player_info)
 
 func get_player_info(id: int) -> Variant:
-	print("On #", multiplayer.get_unique_id(), " getting info for #", id)
 	var existing_data = self.players.get(id)
 	if existing_data:
 		return existing_data
@@ -88,6 +86,7 @@ func get_player_info(id: int) -> Variant:
 		"name": str('#', id),
 		"color": self.random_color(),
 		"team": -1,
+		"ready": false,
 	}
 
 	return self.players[id]

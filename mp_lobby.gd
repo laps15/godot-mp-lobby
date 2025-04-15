@@ -13,4 +13,3 @@ func _ready() -> void:
 func _switch_to_lobby() -> void:
 	self.landing_page.hide()
 	self.lobby_page.show()
-	

@@ -50,6 +50,4 @@ visible = false
 layout_mode = 2
 text = "✔"
 
-[connection signal="popup_closed" from="MarginContainer/VBoxContainer/HBoxContainer/ColorPickerButton" to="." method="_on_color_picker_button_popup_closed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/StartEditButton" to="." method="_toggle_edit"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveName" to="." method="_on_save_name_pressed"]

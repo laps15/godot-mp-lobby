@@ -53,8 +53,7 @@ func _on_player_disconnected(player_id: int) -> void:
 	var player_info = LobbyService.get_player_info(player_id)
 	self._remove_card(player_info["team"], card)
 
-func _on_player_info_updated(player_id, prev_player_info, new_player_info) -> void:
-	print("_on_player_info_updated: on #", multiplayer.get_unique_id(), " prev: ", prev_player_info, " new: ", new_player_info)
+func _on_player_info_updated(player_id: int, prev_player_info, new_player_info) -> void:
 	var card = self.player_cards[player_id] as PlayerCard
 
 	card.set_player_name(new_player_info["name"])\
