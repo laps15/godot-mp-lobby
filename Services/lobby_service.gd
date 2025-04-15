@@ -6,7 +6,8 @@ extends Node
 signal player_connected(peer_id, player_info)
 signal player_disconnected(peer_id)
 signal server_disconnected
-signal player_info_updated(peer_id, prev_player_info, new_player_info)
+signal player_info_updated(peer_id, new_player_info, prev_player_info)
+signal all_players_loaded
 
 const DEFAULT_PORT = 8081
 const DEFAULT_SERVER_IP = "127.0.0.1"
@@ -52,7 +53,7 @@ func remove_multiplayer_peer():
 	players.clear()
 
 @rpc("call_local", "reliable")
-func load_game(game_scene_path):
+func load_game(game_scene_path: String):
 	get_tree().change_scene_to_file(game_scene_path)
 
 @rpc("any_peer", "call_local", "reliable")
@@ -60,7 +61,8 @@ func player_loaded():
 	if multiplayer.is_server():
 		players_loaded += 1
 		if players_loaded == players.size():
-			$/root/Game.start_game()
+			print("All players loaded")
+			self.all_players_loaded.emit()
 			players_loaded = 0
 
 func random_color():
@@ -106,7 +108,7 @@ func _update_player_info(new_player_info):
 	var new_player_id = multiplayer.get_remote_sender_id()
 	var previous_player_info = players[new_player_id].duplicate()
 	players[new_player_id] = new_player_info
-	player_info_updated.emit(new_player_id, previous_player_info, new_player_info)
+	player_info_updated.emit(new_player_id, new_player_info, previous_player_info)
 
 func _on_player_disconnected(id):
 	players.erase(id)

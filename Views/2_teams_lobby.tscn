@@ -9,7 +9,7 @@ font_size = 40
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdx03"]
 bg_color = Color(0, 0, 0, 0)
 
-[node name="2TeamsLobby" type="CanvasLayer" node_paths=PackedStringArray("left_team_player_list", "left_team_join_button", "right_team_player_list", "right_team_join_button", "queue_player_list", "queue_join_button")]
+[node name="2TeamsLobby" type="CanvasLayer" node_paths=PackedStringArray("left_team_player_list", "left_team_join_button", "right_team_player_list", "right_team_join_button", "queue_player_list", "queue_join_button", "start_game_button", "confirm_start_dialog")]
 script = ExtResource("1_k0phf")
 PlayerCardScene = ExtResource("2_0qucc")
 left_team_player_list = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList")
@@ -17,7 +17,9 @@ left_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer
 right_team_player_list = NodePath("PanelContainer/HSplitContainer/HSplitContainer/RightContainer/RightContainerList/PlayerList")
 right_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/RightContainer/PanelContainer/JoinButton")
 queue_player_list = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList")
-queue_join_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/JoinButton")
+queue_join_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/JoinButton")
+start_game_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton")
+confirm_start_dialog = NodePath("AcceptDialog")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -148,21 +150,41 @@ text = "Queue"
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue"]
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_fdx03")
+theme_override_constants/separation = 5
 
-[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer"]
+[node name="Ready" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2"]
+layout_mode = 2
+
+[node name="JoinButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready"]
+visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
 text = "Unready"
 
+[node name="Start" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2"]
+layout_mode = 2
+
+[node name="StartGameButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Start Game"
+
 [node name="Chat?" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer"]
 visible = false
 layout_mode = 2
 
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+title = "Not all players are ready"
+initial_position = 1
+size = Vector2i(245, 80)
+
 [connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/PanelContainer/JoinButton" to="." method="_on_join_left_button_pressed"]
 [connection signal="pressed" from="PanelContainer/HSplitContainer/HSplitContainer/RightContainer/PanelContainer/JoinButton" to="." method="_on_join_right_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/JoinButton" to="." method="_on_join_queue_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/JoinButton" to="." method="_on_join_queue_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton" to="." method="_on_start_game_button_pressed"]

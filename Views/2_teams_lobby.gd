@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal start_game()
+
 @export var PlayerCardScene: PackedScene
 
 @export var left_team_player_list: VBoxContainer
@@ -10,6 +12,9 @@ extends CanvasLayer
 
 @export var queue_player_list: VBoxContainer
 @export var queue_join_button: Button
+@export var start_game_button: Button
+
+@export var confirm_start_dialog: AcceptDialog
 
 enum Team {
 	NONE = -1,
@@ -18,6 +23,7 @@ enum Team {
 }
 
 var player_cards = {}
+var players_unready = 0
 
 func _ready() -> void:
 	LobbyService.player_connected.connect(self._on_player_connected)
@@ -28,6 +34,11 @@ func update_ui_elements_by_team(team: Team) -> void:
 	self.queue_join_button.show()
 	self.left_team_join_button.show()
 	self.right_team_join_button.show()
+	
+	if not self.is_multiplayer_authority():
+		self.start_game_button.hide()
+	else:
+		self.start_game_button.show()
 
 	match team:
 		Team.NONE:
@@ -53,7 +64,7 @@ func _on_player_disconnected(player_id: int) -> void:
 	var player_info = LobbyService.get_player_info(player_id)
 	self._remove_card(player_info["team"], card)
 
-func _on_player_info_updated(player_id: int, prev_player_info, new_player_info) -> void:
+func _on_player_info_updated(player_id: int, new_player_info, prev_player_info) -> void:
 	var card = self.player_cards[player_id] as PlayerCard
 
 	card.set_player_name(new_player_info["name"])\
@@ -65,6 +76,7 @@ func _on_player_info_updated(player_id: int, prev_player_info, new_player_info) 
 func _add_card(team: Team, card: PlayerCard) -> void:
 	match team:
 		Team.NONE:
+			self.players_unready += 1
 			self.queue_player_list.add_child(card)
 		Team.LEFT:
 			self.left_team_player_list.add_child(card)
@@ -74,6 +86,7 @@ func _add_card(team: Team, card: PlayerCard) -> void:
 func _remove_card(team: Team, card: PlayerCard) -> PlayerCard:
 	match team:
 		Team.NONE:
+			self.players_unready -= 1
 			self.queue_player_list.remove_child(card)
 		Team.LEFT:
 			self.left_team_player_list.remove_child(card)
@@ -101,3 +114,11 @@ func _on_join_left_button_pressed() -> void:
 	
 func _on_join_right_button_pressed() -> void:
 	self._move_card(multiplayer.get_unique_id(), Team.RIGHT)
+
+func _on_start_game_button_pressed() -> void:
+	if players_unready > 0:
+		self.confirm_start_dialog.show()
+		return
+
+	self.hide()
+	self.start_game.emit()

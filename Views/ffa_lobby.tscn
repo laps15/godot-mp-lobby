@@ -1,20 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkergnietmeey"]
+[gd_scene load_steps=3 format=3 uid="uid://dkergnietmeey"]
 
 [ext_resource type="Script" uid="uid://2sjpufbnub6e" path="res://Views/ffa_lobby.gd" id="1_ym7q6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ubyh4"]
 font_size = 40
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym7q6"]
-bg_color = Color(0, 0, 0, 0)
-
-[node name="FFALobby" type="CanvasLayer" node_paths=PackedStringArray("left_player_list", "right_player_list", "queue_player_list", "ready_button", "unready_button")]
+[node name="FFALobby" type="CanvasLayer" node_paths=PackedStringArray("left_player_list", "right_player_list", "queue_player_list", "ready_button", "unready_button", "start_game_button", "confirm_start_dialog")]
 script = ExtResource("1_ym7q6")
 left_player_list = NodePath("PanelContainer/HSplitContainer/ReadyPlayerList/LeftContainerList/PanelContainer/HSplitContainer/PanelContainer/ReadyPlayerListLeft")
 right_player_list = NodePath("PanelContainer/HSplitContainer/ReadyPlayerList/LeftContainerList/PanelContainer/HSplitContainer/PanelContainer2/ReadyPlayerListRight")
 queue_player_list = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList")
-ready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/ReadyButton")
-unready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/UnreadyButton")
+ready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/ReadyButton")
+unready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/UnreadyButton")
+start_game_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton")
+confirm_start_dialog = NodePath("AcceptDialog")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -106,26 +105,44 @@ text = "Unready"
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue"]
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_ym7q6")
+theme_override_constants/separation = 5
 
-[node name="UnreadyButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer"]
+[node name="Ready" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2"]
+layout_mode = 2
+
+[node name="UnreadyButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
 text = "Unready"
 
-[node name="ReadyButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer"]
+[node name="ReadyButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 8
 text = "Ready"
 
+[node name="Start" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2"]
+layout_mode = 2
+
+[node name="StartGameButton" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start"]
+visible = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Start Game"
+
 [node name="Chat?" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer"]
 visible = false
 layout_mode = 2
 
-[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/UnreadyButton" to="." method="_on_unready_button_pressed"]
-[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/PanelContainer/ReadyButton" to="." method="_on_ready_button_pressed"]
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "Not all players are ready"
+initial_position = 1
+size = Vector2i(245, 80)
+
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/UnreadyButton" to="." method="_on_unready_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/ReadyButton" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton" to="." method="_on_start_game_button_pressed"]

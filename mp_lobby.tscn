@@ -14,7 +14,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6ohly")
 landing_page = NodePath("LandingPage")
-lobby_page = NodePath("2TeamsLobby")
+lobby_page = NodePath("FFALobby")
+game_scene_path = "uid://3ohxepbyo43c"
 
 [node name="LandingPage" parent="." instance=ExtResource("1_u0iwr")]
 
