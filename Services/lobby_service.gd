@@ -1,6 +1,5 @@
+@tool
 extends Node
-
-# Autoload named Lobby
 
 # These signals can be connected to by a UI lobby scene or the game scene.
 signal player_connected(peer_id, player_info)
