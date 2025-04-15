@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://1qwokwknluep"]
+
+[ext_resource type="Script" uid="uid://dqn102aje5ikk" path="res://mp_lobby.gd" id="1_6ohly"]
+[ext_resource type="PackedScene" uid="uid://icdargwf88w1" path="res://Views/landing_page.tscn" id="1_u0iwr"]
+[ext_resource type="PackedScene" uid="uid://djjivgknw8vqw" path="res://Views/2_teams_lobby.tscn" id="2_gw2b7"]
+
+[node name="MPLobby" type="Control" node_paths=PackedStringArray("landing_page", "lobby_page")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ohly")
+landing_page = NodePath("LandingPage")
+lobby_page = NodePath("2TeamsLobby")
+
+[node name="LandingPage" parent="." instance=ExtResource("1_u0iwr")]
+
+[node name="2TeamsLobby" parent="." instance=ExtResource("2_gw2b7")]
