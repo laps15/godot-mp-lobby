@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://djit8qia8kgwy"]
 
-[ext_resource type="Script" uid="uid://crnljgqbxymki" path="res://Views/player_card.gd" id="1_t6vkb"]
+[ext_resource type="Script" uid="uid://doqqrxsg4ja0u" path="res://addons/lobby_lib/Views/player_card.gd" id="1_lriyv"]
 
 [node name="PlayerCard" type="PanelContainer" node_paths=PackedStringArray("player_color_picker", "player_name_label", "start_edit_button", "player_name_input", "save_name_button")]
 custom_minimum_size = Vector2(0, 30)
-script = ExtResource("1_t6vkb")
+script = ExtResource("1_lriyv")
 player_color_picker = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ColorPickerButton")
 player_name_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/PlayerName")
 start_edit_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StartEditButton")
@@ -30,11 +30,11 @@ theme_override_constants/separation = 5
 [node name="ColorPickerButton" type="ColorPickerButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
+disabled = true
 edit_alpha = false
 
 [node name="PlayerName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Name"
 
 [node name="StartEditButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false

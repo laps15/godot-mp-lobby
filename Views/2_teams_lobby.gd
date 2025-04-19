@@ -1,5 +1,6 @@
 @tool
 extends CanvasLayer
+class_name TeamsLobby
 
 signal start_game()
 
@@ -14,6 +15,7 @@ signal start_game()
 @export var queue_player_list: VBoxContainer
 @export var queue_join_button: Button
 @export var start_game_button: Button
+@export var switch_game_mode_button: Button
 
 @export var confirm_start_dialog: AcceptDialog
 
@@ -38,8 +40,10 @@ func update_ui_elements_by_team(team: Team) -> void:
 	
 	if not self.is_multiplayer_authority():
 		self.start_game_button.hide()
+		self.switch_game_mode_button.hide()
 	else:
 		self.start_game_button.show()
+		self.switch_game_mode_button.show()
 
 	match team:
 		Team.NONE:

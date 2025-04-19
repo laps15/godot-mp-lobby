@@ -1,18 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkergnietmeey"]
+[gd_scene load_steps=4 format=3 uid="uid://dkergnietmeey"]
 
-[ext_resource type="Script" uid="uid://2sjpufbnub6e" path="res://Views/ffa_lobby.gd" id="1_ym7q6"]
+[ext_resource type="Script" uid="uid://c8vfdf4njsg7j" path="res://addons/lobby_lib/Views/ffa_lobby.gd" id="1_pr2ql"]
+[ext_resource type="PackedScene" uid="uid://djit8qia8kgwy" path="res://addons/lobby_lib/Views/player_card.tscn" id="2_6fexn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ubyh4"]
 font_size = 40
 
-[node name="FFALobby" type="CanvasLayer" node_paths=PackedStringArray("left_player_list", "right_player_list", "queue_player_list", "ready_button", "unready_button", "start_game_button", "confirm_start_dialog")]
-script = ExtResource("1_ym7q6")
+[node name="FFALobby" type="CanvasLayer" node_paths=PackedStringArray("left_player_list", "right_player_list", "queue_player_list", "ready_button", "unready_button", "start_game_button", "switch_game_mode_button", "confirm_start_dialog")]
+script = ExtResource("1_pr2ql")
+PlayerCardScene = ExtResource("2_6fexn")
 left_player_list = NodePath("PanelContainer/HSplitContainer/ReadyPlayerList/LeftContainerList/PanelContainer/HSplitContainer/PanelContainer/ReadyPlayerListLeft")
 right_player_list = NodePath("PanelContainer/HSplitContainer/ReadyPlayerList/LeftContainerList/PanelContainer/HSplitContainer/PanelContainer2/ReadyPlayerListRight")
 queue_player_list = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList")
 ready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/ReadyButton")
 unready_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/UnreadyButton")
 start_game_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton")
+switch_game_mode_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/Chat?/SwitchToTeams")
 confirm_start_dialog = NodePath("AcceptDialog")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -135,8 +138,11 @@ layout_mode = 2
 text = "Start Game"
 
 [node name="Chat?" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer"]
-visible = false
 layout_mode = 2
+
+[node name="SwitchToTeams" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/Chat?"]
+layout_mode = 2
+text = "Switch to Teams"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 title = "Not all players are ready"

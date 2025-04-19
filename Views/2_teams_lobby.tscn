@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://djjivgknw8vqw"]
 
-[ext_resource type="Script" uid="uid://iuxqi2aqpy0u" path="res://Views/2_teams_lobby.gd" id="1_k0phf"]
-[ext_resource type="PackedScene" uid="uid://djit8qia8kgwy" path="res://Views/player_card.tscn" id="2_0qucc"]
+[ext_resource type="Script" uid="uid://b1t37ju2ufrd7" path="res://addons/lobby_lib/Views/2_teams_lobby.gd" id="1_ury33"]
+[ext_resource type="PackedScene" uid="uid://djit8qia8kgwy" path="res://addons/lobby_lib/Views/player_card.tscn" id="2_0qucc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ld1rt"]
 font_size = 40
@@ -9,8 +9,8 @@ font_size = 40
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdx03"]
 bg_color = Color(0, 0, 0, 0)
 
-[node name="2TeamsLobby" type="CanvasLayer" node_paths=PackedStringArray("left_team_player_list", "left_team_join_button", "right_team_player_list", "right_team_join_button", "queue_player_list", "queue_join_button", "start_game_button", "confirm_start_dialog")]
-script = ExtResource("1_k0phf")
+[node name="2TeamsLobby" type="CanvasLayer" node_paths=PackedStringArray("left_team_player_list", "left_team_join_button", "right_team_player_list", "right_team_join_button", "queue_player_list", "queue_join_button", "start_game_button", "switch_game_mode_button", "confirm_start_dialog")]
+script = ExtResource("1_ury33")
 PlayerCardScene = ExtResource("2_0qucc")
 left_team_player_list = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/LeftContainerList/PlayerList")
 left_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContainer/LeftContainer/PanelContainer/JoinButton")
@@ -19,6 +19,7 @@ right_team_join_button = NodePath("PanelContainer/HSplitContainer/HSplitContaine
 queue_player_list = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer/PlayerList")
 queue_join_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Ready/JoinButton")
 start_game_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/PanelContainer/Queue/VBoxContainer2/Start/StartGameButton")
+switch_game_mode_button = NodePath("PanelContainer/HSplitContainer/VSplitContainer/Chat?/SwitchToFFA")
 confirm_start_dialog = NodePath("AcceptDialog")
 
 [node name="Control" type="Control" parent="."]
@@ -177,6 +178,10 @@ text = "Start Game"
 [node name="Chat?" type="PanelContainer" parent="PanelContainer/HSplitContainer/VSplitContainer"]
 visible = false
 layout_mode = 2
+
+[node name="SwitchToFFA" type="Button" parent="PanelContainer/HSplitContainer/VSplitContainer/Chat?"]
+layout_mode = 2
+text = "Switch to FFA"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
